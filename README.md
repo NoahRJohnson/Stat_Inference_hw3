@@ -1,2 +1,2 @@
 # Stat_Inference_hw3
-The second homework for my Statistical Inference for Data Science II course.
+Solving exercises from Chapter 5 of the textbook "Introduction to Bayesian Statistics", by Bolstad.

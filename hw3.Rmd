@@ -1,0 +1,134 @@
+---
+title: "Homework 3"
+author: "Noah Johnson"
+date: "February 24, 2018"
+output: pdf_document
+header-includes:
+  - \usepackage{enumitem}
+  - \usepackage{xcolor}
+  - \usepackage{amsmath}
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = TRUE)
+
+library(install.load)
+
+install_load("tidyverse")
+```
+
+## Exercises
+
+\textbf{5.2} A discrete random variable $Y$ has discrete distribution given in the following table:
+
+\begin{tabular}{cc}
+$y_i$ & $f(y_i)$ \rule[-1.5ex]{0pt}{0pt} \\
+\hline\rule{0pt}{2.5ex}0 & .1 \\
+1 & .2 \\
+2 & .3 \\
+5 & .4\rule[-1.5ex]{0pt}{0pt} \\
+\hline\rule{0pt}{2.5ex}
+\end{tabular}
+
+\begin{enumerate}[label=(\alph*)]
+
+\item \textbf{Calculate} $\mathbf{P(0 < Y < 2).}$
+
+$$
+P(0 < Y < 2) = P(Y = 1) = f(1) = .2
+$$
+
+\item \textbf{Calculate} $\mathbf{E(Y).}$
+
+$$
+\begin{aligned}
+E(Y) = \sum\limits_{i}y_if(y_i) \\
+= 0*.1 + 1*.2 + 2*.3 + 5*.4 = 2.8
+\end{aligned}
+$$
+
+\item \textbf{Calculate} $\mathbf{Var(Y).}$
+
+$$
+Var(Y) = E((Y - E(Y))^2) = E(Y^2) - E(Y)^2
+$$
+
+$$
+\begin{aligned}
+E(Y^2) = \sum\limits_{i}y_i^2f(y_i) \\
+= 0^2*.1 + 1^2*.2 + 2^2*.3 + 5^2*.4 = 11.4
+\end{aligned}
+$$
+
+$$
+\therefore Var(Y) = 11.4 - (2.8)^2 = 3.56
+$$
+
+\item \textbf{Let} $\mathbf{W = 3Y - 1.}$ \textbf{Calculate } $\mathbf{E(W).}$
+
+$$
+E(W) = E(3Y - 1) = 3E(Y) + E(-1) = 3*2.8 - 1 = 7.4
+$$
+
+\item \textbf{Calculate} $\mathbf{Var(W).}$
+
+$$
+E(W^2) = E((3Y-1)^2) = E(9Y^2 - 6Y + 1) = 9E(Y^2) - 6E(Y) + 1 = 9*11.4 -6*2.8 + 1 = 86.8
+$$
+
+$$
+Var(W) = E(W^2) - E(W)^2 = 86.8^2 - 7.4^2 = 7479.48
+$$
+
+\end{enumerate}
+
+\textbf{5.4} Let $Y$ be \textit{binomial} ($n = 4, \pi = .3$).
+
+\begin{enumerate}[label=(\alph*)]
+
+\item \textbf{Calculate the mean and variance by filling in the following table:} 
+
+```{r} 
+n <- 4
+p <- 0.3
+ys <- c(0,1,2,3,4)
+fs <- dbinom(ys, n, p)
+y.fs <- ys * fs
+y.y.fs <- ys * ys * fs
+sums <- c(sum(fs), sum(y.fs), sum(y.y.fs))
+```
+
+\begin{tabular}{cccc}
+$y_i$ & $f(y_i)$ & $y_i \times f(y_i)$ & $y_i^2 \times f(y_i)$ \rule[-1.5ex]{0pt}{0pt} \\
+\hline\rule{0pt}{2.5ex}`r ys[1]` & `r fs[1]` & `r y.fs[1]` & `r y.y.fs[1]` \\
+`r ys[2]` & `r fs[2]` & `r y.fs[2]` & `r y.y.fs[2]` \\
+`r ys[3]` & `r fs[3]` & `r y.fs[3]` & `r y.y.fs[3]` \\
+`r ys[4]` & `r fs[4]` & `r y.fs[4]` & `r y.y.fs[4]` \\
+`r ys[5]` & `r fs[5]` & `r y.fs[5]` & `r y.y.fs[5]` \\
+\hline Sum & `r sums[1]` & `r sums[2]` & `r sums[3]` \\
+\hline\rule{0pt}{2.5ex}
+\end{tabular}
+
+\begin{enumerate}[label=\roman*.]
+\item $\mathbf{E(Y) = }$ `r sums[2]`
+
+\item $\mathbf{Var(Y) = }$ $E(Y^2) - E(Y)^2$ = `r sums[3]` - `r sums[2]`$^2$ = `r sums[3] - sums[2]^2`
+\end{enumerate}
+
+\item \textbf{Calculate the mean and variance of Y using Equations 5.7 and 5.8, respectively. Do you get the same as you got in part (a)?}
+
+\begin{equation} \tag{5.7}
+E(Y|n,\pi) = n \pi
+\end{equation}
+
+\begin{equation} \tag{5.8}
+Var(Y|n,\pi) = n \pi (1 - \pi)
+\end{equation}
+
+So $E(Y|n=4,\pi=0.3) = 4 * 0.3 = 1.2$,
+
+and $Var(Y|n=4,\pi=0.3) = 4 * 0.3 * (1 - 0.3) = 0.84$.
+
+These are indeed the same values we computed in part (a).
+\end{enumerate}
+
